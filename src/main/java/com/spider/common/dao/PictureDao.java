@@ -1,6 +1,7 @@
 package com.spider.common.dao;
 
 
+import com.spider.common.utils.DbFactory;
 import com.spider.common.utils.JdbcUtils;
 import com.spider.common.utils.MD5Utils;
 import org.apache.commons.dbutils.QueryRunner;
@@ -32,41 +33,19 @@ public class PictureDao {
     }
 
     private long savePic(String url, String md5) {
-        long id = -1;
         String sql = "insert into tb_picture (pic_link,link_md5,image_status,createtime,updatetime) values (?,?,0,UNIX_TIMESTAMP(),UNIX_TIMESTAMP())";
-        QueryRunner qr = new QueryRunner(JdbcUtils.getDataSource());
-        Map<String, Object> map = null;
-        try {
-            map = qr.insert(sql, new MapHandler(), url, md5);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        if (map != null && !map.isEmpty()) {
-            Object obj = map.get("GENERATED_KEY");
-            id = obj != null ? Long.parseLong(obj.toString()) : -1;
-        }
-        return id;
+        return JdbcUtils.insertGenerateKey(sql, url, md5);
     }
 
     private long getPicIdByMd5(String md5) {
         long id = -1;
         String sql = "select id from tb_picture where link_md5=?";
-        QueryRunner qr = new QueryRunner(JdbcUtils.getDataSource());
-        Map<String, Object> map = null;
-        try {
-            map = qr.query(sql, new MapHandler(), md5);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        if (map != null && !map.isEmpty()) {
-            Object obj = map.get("id");
-            id = obj != null ? Long.parseLong(obj.toString()) : -1;
-        }
-        return id;
+        Map<String, Object> map = JdbcUtils.getMap(sql, md5);
+        return (map != null && map.get("id") != null) ? Long.parseLong(map.get("id").toString()) : id;
     }
 
     public static void main(String[] args) {
-        long picId = new PictureDao().getPicId("http://img2.ad.agrantsem.com//18084/modified_1ebfdf43e4b3da22a705e31e8d428f45.jpg");
+        long picId = new PictureDao().getPicId("http://img2.ad.agrantsem.com//18084/modified_1ebddd43e4b3da22a705e31e8d428f45.jpg");
         System.out.println(picId);
     }
 }
