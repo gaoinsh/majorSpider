@@ -42,4 +42,14 @@ public class Picture {
     public void setStatus(Integer status) {
         this.status = status;
     }
+
+    @Override
+    public String toString() {
+        return "Picture{" +
+                "id=" + id +
+                ", url='" + url + '\'' +
+                ", localUrl='" + localUrl + '\'' +
+                ", status=" + status +
+                '}';
+    }
 }
