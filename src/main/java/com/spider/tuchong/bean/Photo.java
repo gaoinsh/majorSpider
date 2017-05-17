@@ -42,4 +42,13 @@ public class Photo {
     public void setTag(String tag) {
         this.tag = tag;
     }
+
+    @Override
+    public String toString() {
+        return "Photo{" +
+                "sourceId=" + sourceId +
+                ", picId=" + picId +
+                ", tag='" + tag + '\'' +
+                '}';
+    }
 }
