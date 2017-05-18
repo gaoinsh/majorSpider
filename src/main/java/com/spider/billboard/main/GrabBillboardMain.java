@@ -27,12 +27,25 @@ public class GrabBillboardMain {
     private static SongDao songDao = new SongDao();
 
     public static void main(String[] args) {
-
-        Spider.create(new BillboardPageProcessor()).addPipeline(new DbPipeline()).thread(1).addUrl("http://www.billboard.com/charts/hot-100").start();
+        BillboardPageProcessor billboardPageProcessor = new BillboardPageProcessor();
+        billboardPageProcessor.setGoNext(false);
+        Spider.create(billboardPageProcessor).addPipeline(new DbPipeline()).thread(1).addUrl("http://www.billboard.com/charts/hot-100/2007-11-24").start();
 
     }
 
     private static class BillboardPageProcessor implements PageProcessor {
+
+        private boolean goNext = true;
+        private boolean goPrevious = true;
+
+        public void setGoNext(boolean goNext) {
+            this.goNext = goNext;
+        }
+
+
+        public void setGoPrevious(boolean goPrevious) {
+            this.goPrevious = goPrevious;
+        }
 
         public void process(Page page) {
             String currPage = page.getUrl().get();
@@ -40,11 +53,11 @@ public class GrabBillboardMain {
             List<String> list = new ArrayList<String>();
             String previous = RegexFilter.regexFilter(content, "<a[^>]*?href=\"([^\"]*)\"[^>]*?title=\"Previous Week\"");
             String next = RegexFilter.regexFilter(content, "<a[^>]*?href=\"([^\"]*)\"[^>]*?title=\"Next Week\"");
-            if (StringUtils.isNotEmpty(previous)) {
+            if (StringUtils.isNotEmpty(previous) && goPrevious) {
                 previous = UrlUtils.canonicalizeUrl(previous, currPage);
                 list.add(previous);
             }
-            if (StringUtils.isNotEmpty(next) && !next.equals(currPage)) {
+            if (StringUtils.isNotEmpty(next) && !next.equals(currPage) && goNext) {
                 next = UrlUtils.canonicalizeUrl(next, currPage);
                 list.add(next);
             }
@@ -75,8 +88,6 @@ public class GrabBillboardMain {
                         songInfo.setRank(rank++);
                         songInfo.setSongName(StringExtUtils.unescape(name));
                         songInfos.add(songInfo);
-                    } else {
-                        System.out.println(article);
                     }
                 }
                 page.putField("data", songInfos);
@@ -104,7 +115,7 @@ public class GrabBillboardMain {
                     logger.info(" ------------------" + time + "------------------");
                     for (SongInfo song : songInfos) {
                         song.setBoardId(billboardId);
-                        logger.info(" rank : " + song.getRank() + " ," + song.getSongName() + " by --- " + song.getArtist());
+//                        logger.info(" rank : " + song.getRank() + " ," + song.getSongName() + " by --- " + song.getArtist());
                         songDao.saveAndUpdate(song);
                     }
                 }
