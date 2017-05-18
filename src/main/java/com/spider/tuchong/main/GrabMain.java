@@ -33,8 +33,8 @@ public class GrabMain {
 
     enum Tag {
         portrait("人像"),
-        scenery("风光"),
-        humanity("人文"),
+       /* scenery("风光"),
+        humanity("人文"),*/
         beauty("美女");
 
         private String tagName;
@@ -56,7 +56,7 @@ public class GrabMain {
             String url = baseUrl.replace("@page@", "1").replace("@tag@", tagParam);
             PhotoPageProcessor photoPageProcessor = new PhotoPageProcessor(tag.tagName, tagParam);
             PhotoPipeline photoPipeline = new PhotoPipeline();
-            Spider.create(photoPageProcessor).addPipeline(photoPipeline).addUrl(url).thread(1).start();
+            Spider.create(photoPageProcessor).addPipeline(photoPipeline).addUrl(url).thread(5).start();
         }
     }
 

@@ -25,4 +25,19 @@ public class RegexFilter {
         matcher = null;
         return result;
     }
+
+    public static String regexFilter(String content,String regex){
+        if(regex == null || content == null){
+            return null;
+        }
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(content);
+        String result = null;
+        if( matcher.find() ) {
+            result = matcher.group(1);
+        }
+        pattern = null;
+        matcher = null;
+        return result;
+    }
 }

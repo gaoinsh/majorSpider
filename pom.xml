@@ -3,9 +3,9 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.trap.web</groupId>
     <artifactId>majorSpider</artifactId>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <version>1.0-SNAPSHOT</version>
-    <name>majorSpider Maven Webapp</name>
+    <name>majorSpider</name>
     <url>http://maven.apache.org</url>
 
     <properties>
