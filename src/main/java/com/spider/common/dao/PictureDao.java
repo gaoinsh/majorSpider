@@ -1,14 +1,10 @@
 package com.spider.common.dao;
 
 
-import com.spider.common.utils.DbFactory;
 import com.spider.common.utils.JdbcUtils;
 import com.spider.common.utils.MD5Utils;
-import org.apache.commons.dbutils.QueryRunner;
-import org.apache.commons.dbutils.handlers.MapHandler;
 import org.apache.commons.lang.StringUtils;
 
-import java.sql.SQLException;
 import java.util.Map;
 
 /**
