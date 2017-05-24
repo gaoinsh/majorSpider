@@ -21,23 +21,39 @@ public class RegexFilter {
         while (matcher.find()) {
             result.add(matcher.group(1));
         }
-        pattern = null;
-        matcher = null;
         return result;
     }
 
-    public static String regexFilter(String content,String regex){
-        if(regex == null || content == null){
+    public static String regexFilter(String content, String regex) {
+        if (regex == null || content == null) {
             return null;
         }
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(content);
         String result = null;
-        if( matcher.find() ) {
+        if (matcher.find()) {
             result = matcher.group(1);
         }
-        pattern = null;
-        matcher = null;
         return result;
+    }
+
+    public static boolean regexMatch(String content, String regex) {
+        return regexMatch(content, regex, false);
+    }
+
+    public static boolean regexMatch(String content, String regex, boolean caseInsensitive) {
+        if (regex != null && content != null) {
+            Pattern pattern;
+            if (caseInsensitive) {
+                pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+            } else {
+                pattern = Pattern.compile(regex);
+            }
+
+            Matcher matcher = pattern.matcher(content);
+            return matcher.find();
+        } else {
+            return false;
+        }
     }
 }
