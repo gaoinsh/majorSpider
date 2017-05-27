@@ -5,7 +5,6 @@ import com.spider.billboard.bean.SongInfo;
 import com.spider.billboard.dao.SongDao;
 import com.spider.common.utils.*;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,7 +17,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  * project majorSpider
  */
 public class AnalyseArtistMain {
-    private static Logger logger = Logger.getLogger(AnalyseArtistMain.class);
+    private static final int threadNum = 4;
     private static SongDao songDao = new SongDao();
 
     public static void main(String[] args) {
@@ -35,21 +34,28 @@ public class AnalyseArtistMain {
                 long songId = o.getId();
                 if (StringUtils.isNotEmpty(artist)) {
                     List<String> artists = new ArrayList<String>();
-                    String rs = artist.replaceAll("(\\s+([fF]eat\\.|[fF]eaturing|&|x|/|,|[aA]nd|[wW]ith)\\s+|,)", " Featuring ");
+                    String rs = replaceStr(artist);
                     artists.addAll(Arrays.asList(rs.split("Featuring")));
                     for (String name : artists) {
-                        ArtistSong as = new ArtistSong();
-                        as.setName(name.trim());
-                        as.setSongId(songId);
-                        songDao.saveArtist(as);
+                        if (StringUtils.isNotEmpty(name.trim())) {
+                            ArtistSong as = new ArtistSong();
+                            as.setName(name.trim());
+                            as.setSongId(songId);
+                            songDao.saveArtist(as);
+                        }
                     }
                 }
 
             }
         }, producerThread);
+        for (int i = 0; i < threadNum; i++) {
+            new Thread(consumerEnd).start();
+        }
 
-        new Thread(consumerEnd).start();
+    }
 
+    public static String replaceStr(String str) {
+        return str.replace(")", "").replaceAll("(\\s+([fF]eat\\.|[fF]eat[uring]{5}|[Cc]o-[sS]tarring|&|[Xx]|\\+|/|[oO][rR]|,|[aA]nd|AND|(?:[dD]uet\\s*)?[wW]ith|WITH|[Vv][Ss])\\s+|,|/|\\()", " Featuring ");
     }
 
 

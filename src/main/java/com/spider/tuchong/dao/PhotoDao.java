@@ -14,7 +14,7 @@ import java.sql.SQLException;
 public class PhotoDao {
 
     public void save(Photo photo) {
-        String sql = "insert into tb_photo (source_id,pic_id,tag,createtime,updatetime) values (?,?,?,UNIX_TIMESTAMP(),UNIX_TIMESTAMP())";
+        String sql = "insert into tb_photo (source_id,pic_id,tag,createtime,updatetime) values (?,?,?,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()) on duplicate key update updatetime=UNIX_TIMESTAMP()";
         JdbcUtils.insertGenerateKey(sql, photo.getSourceId(), photo.getPicId(), photo.getTag());
     }
 }
