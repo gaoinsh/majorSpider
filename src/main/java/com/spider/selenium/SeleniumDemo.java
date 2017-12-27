@@ -28,11 +28,11 @@ public class SeleniumDemo {
         driver.get("https://weibo.com/");
         driver.manage().window().maximize();
         WebDriverWait waitCondition=new WebDriverWait(driver,30);
-        waitCondition.until(new Function<WebDriver, Object>() {
-            public Object apply(WebDriver webDriver) {
-                return webDriver.findElement(By.xpath("//*[@id=\"loginname\"]"));
-            }
-        });
+//        waitCondition.until(new Function<WebDriver, Object>() {
+//            public Object apply(WebDriver webDriver) {
+//                return webDriver.findElement(By.xpath("//*[@id=\"loginname\"]"));
+//            }
+//        });
 
         //登录
         driver.findElement(By.xpath("//*[@id=\"loginname\"]")).sendKeys("15623643356@sina.cn");
