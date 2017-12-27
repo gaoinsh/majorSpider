@@ -33,7 +33,6 @@ public class SeleniumDemo {
 //                return webDriver.findElement(By.xpath("//*[@id=\"loginname\"]"));
 //            }
 //        });
-
         //登录
         driver.findElement(By.xpath("//*[@id=\"loginname\"]")).sendKeys("15623643356@sina.cn");
         driver.findElement(By.xpath("//*[@id=\"pl_login_form\"]/div/div[3]/div[2]/div/input")).sendKeys("lydia921204");

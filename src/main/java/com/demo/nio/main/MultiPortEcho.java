@@ -29,13 +29,13 @@ public class MultiPortEcho {
             InetSocketAddress address = new InetSocketAddress(ports[i]);
             ss.bind(address);
 
-            SelectionKey key = ssc.register(selector, SelectionKey.OP_ACCEPT);
+            ssc.register(selector, SelectionKey.OP_ACCEPT);
 
             System.out.println("Going to listen on " + ports[i]);
         }
 
         while (true) {
-            int num = selector.select();
+            selector.select();
 
             Set selectedKeys = selector.selectedKeys();
             Iterator it = selectedKeys.iterator();

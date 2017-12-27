@@ -14,10 +14,10 @@ public class SocketChannelBlockingMain {
 
     public static void main(String[] args) throws IOException, InterruptedException {
         SocketChannel socketChannel = SocketChannel.open();
-        SocketAddress address = new InetSocketAddress(9999);
+        SocketAddress address = new InetSocketAddress(9090);
         if (socketChannel.connect(address)) {
             ByteBuffer buffer = ByteBuffer.allocate(64);
-            for (int i = 0; ; i++) {
+            for (int i = 0; i < 10; i++) {
                 String msg = "this is " + i + " times request . ";
                 buffer.put(msg.getBytes());
                 buffer.flip();
