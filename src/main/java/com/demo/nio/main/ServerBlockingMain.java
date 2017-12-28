@@ -11,7 +11,7 @@ import java.nio.channels.SocketChannel;
  * Created by xiang.gao on 2017/12/26.
  * project majorSpider
  */
-public class ServerSocketChannelBlockingMain {
+public class ServerBlockingMain {
 
     public static void main(String[] args) throws IOException {
         ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();

@@ -23,7 +23,7 @@ public class SeleniumDemo {
         service.start();
         //chrome位置
         ChromeOptions options = new ChromeOptions();
-        options.setBinary("C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe");
+//        options.setBinary("C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe");
         WebDriver driver = new ChromeDriver(service, options);
         driver.get("https://weibo.com/");
         driver.manage().window().maximize();

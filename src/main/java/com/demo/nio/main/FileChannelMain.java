@@ -41,7 +41,7 @@ public class FileChannelMain {
         RandomAccessFile file = new RandomAccessFile("D:\\BugReport.txt", "rw");
         FileChannel channel = file.getChannel();
         ByteBuffer buffer = ByteBuffer.allocate(1024);
-        buffer.put("this is nio".getBytes());
+        buffer.put("this is  2222 ".getBytes());
         buffer.flip();
         while (buffer.hasRemaining()) {
             channel.write(buffer);

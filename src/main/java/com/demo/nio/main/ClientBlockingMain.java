@@ -10,7 +10,7 @@ import java.nio.channels.SocketChannel;
  * Created by xiang.gao on 2017/12/27.
  * project majorSpider
  */
-public class SocketChannelBlockingMain {
+public class ClientBlockingMain {
 
     public static void main(String[] args) throws IOException, InterruptedException {
         SocketChannel socketChannel = SocketChannel.open();

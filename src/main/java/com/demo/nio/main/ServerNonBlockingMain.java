@@ -11,20 +11,19 @@ import java.util.Set;
  * Created by xiang.gao on 2017/12/27.
  * project majorSpider
  */
-public class ServerSocketChannelMain {
+public class ServerNonBlockingMain {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException {
         Selector selector = Selector.open();
         ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
         serverSocketChannel.bind(new InetSocketAddress(9090));
         serverSocketChannel.configureBlocking(false);
-        serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
+        SelectionKey selectionKey = serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
 
 
         while (true) {
             selector.select();
-            Set<SelectionKey> selectionKeys = selector.selectedKeys();
-            Iterator<SelectionKey> iterator = selectionKeys.iterator();
+            Iterator<SelectionKey> iterator = selector.selectedKeys().iterator();
             while (iterator.hasNext()) {
                 SelectionKey key = iterator.next();
                 if (key.isAcceptable()) {
@@ -45,9 +44,19 @@ public class ServerSocketChannelMain {
                         buffer.clear();
                         System.out.println("receive msg : " + msg);
                     }
+                } else if (key.isWritable()) {
+                    System.out.println(" ready to write ...");
+                    SocketChannel socketChannel = (SocketChannel) key.channel();
+                    ByteBuffer buffer = ByteBuffer.allocate(1024);
+                    buffer.put("hello client .this is server .. ".getBytes());
+                    buffer.flip();
+                    while (buffer.hasRemaining()) {
+                        socketChannel.write(buffer);
+                    }
+                    buffer.clear();
                 }
-                iterator.remove();
             }
+            iterator.remove();
         }
     }
 }
