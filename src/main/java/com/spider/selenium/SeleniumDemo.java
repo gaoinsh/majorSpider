@@ -1,6 +1,5 @@
 package com.spider.selenium;
 
-import com.google.common.base.Function;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -10,6 +9,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.function.Function;
 
 /**
  * Created by xiang.gao on 2017/12/11.
@@ -28,11 +28,11 @@ public class SeleniumDemo {
         driver.get("https://weibo.com/");
         driver.manage().window().maximize();
         WebDriverWait waitCondition=new WebDriverWait(driver,30);
-//        waitCondition.until(new Function<WebDriver, Object>() {
-//            public Object apply(WebDriver webDriver) {
-//                return webDriver.findElement(By.xpath("//*[@id=\"loginname\"]"));
-//            }
-//        });
+        waitCondition.until(new Function<WebDriver, Object>() {
+            public Object apply(WebDriver webDriver) {
+                return webDriver.findElement(By.xpath("//*[@id=\"loginname\"]"));
+            }
+        });
         //登录
         driver.findElement(By.xpath("//*[@id=\"loginname\"]")).sendKeys("15623643356@sina.cn");
         driver.findElement(By.xpath("//*[@id=\"pl_login_form\"]/div/div[3]/div[2]/div/input")).sendKeys("lydia921204");
