@@ -19,9 +19,7 @@ public class WebSpiderPage {
     }
 
     public void addTargetRequest(WebSpiderRequest request) {
-        synchronized (targetRequests) {
-            targetRequests.add(request);
-        }
+        targetRequests.add(request);
     }
 
     public List<WebSpiderRequest> getTargetRequests() {

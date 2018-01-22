@@ -18,12 +18,12 @@
         <dependency>
             <groupId>us.codecraft</groupId>
             <artifactId>webmagic-core</artifactId>
-            <version>0.6.1</version>
+            <version>0.7.3</version>
         </dependency>
         <dependency>
             <groupId>us.codecraft</groupId>
             <artifactId>webmagic-extension</artifactId>
-            <version>0.6.1</version>
+            <version>0.7.3</version>
         </dependency>
 
         <dependency>
@@ -124,6 +124,16 @@
     </dependencies>
     <build>
         <finalName>majorSpider</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
 
     <!--<repositories>
