@@ -43,6 +43,10 @@ public class HierarchyLinkPageProcessor implements PageProcessor {
                     }
                     url = UrlUtils.canonicalizeUrl(url, parentUrl);
 
+                    if (StringUtils.isEmpty(url)) {
+                        continue;
+                    }
+
                     WebSpiderRequest newRequest = new WebSpiderRequest();
                     newRequest.setUrl(url);
                     Map<String, Object> mapData = new HashMap<>();
