@@ -18,7 +18,7 @@ public class WebSpiderFanliMain {
 
     private static void execute() {
 
-        HierarchyLinkPageProcessor pageProcessor = new HierarchyLinkPageProcessor() {
+        HierarchyLinkPageProcessor pageProcessor = new HierarchyLinkPageProcessor(maxLevel) {
             @Override
             public void process(WebSpiderPage page) {
                 super.process(page);
@@ -26,7 +26,6 @@ public class WebSpiderFanliMain {
             }
         };
 
-        pageProcessor.setMaxLevel(maxLevel);
 
         new WebSpiderWorker(pageProcessor).addUrl("http://passport.fanli.com/center/welcome").start();
 

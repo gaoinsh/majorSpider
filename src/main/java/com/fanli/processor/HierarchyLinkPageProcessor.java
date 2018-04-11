@@ -19,7 +19,7 @@ public class HierarchyLinkPageProcessor implements PageProcessor {
     private static final String PARENT_URL = "parent_url";
     private int maxLevel = 3;  //最大深度
 
-    public void setMaxLevel(int maxLevel) {
+    public HierarchyLinkPageProcessor(int maxLevel) {
         this.maxLevel = maxLevel;
     }
 

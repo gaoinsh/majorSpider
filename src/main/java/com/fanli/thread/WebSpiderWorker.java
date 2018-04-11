@@ -63,21 +63,16 @@ public class WebSpiderWorker implements Runnable {
     }
 
     private void doRequestAsyn(final WebSpiderRequest request) {
-        threadPool.submit(new Runnable() {
-            @Override
-            public void run() {
-                WebSpiderPage page = downloader.download(request);
+        threadPool.submit(() -> {
+            WebSpiderPage page = downloader.download(request);
 
-                if (page == null) {
-                    onError(request);
-                } else {
-                    pageProcessor.process(page);
-                    List<WebSpiderRequest> targetRequests = page.getTargetRequests();
-                    if (targetRequests != null && !targetRequests.isEmpty()) {
-                        for (WebSpiderRequest request : targetRequests) {
-                            addRequest(request);
-                        }
-                    }
+            if (page == null) {
+                onError(request);
+            } else {
+                pageProcessor.process(page);
+                List<WebSpiderRequest> targetRequests = page.getTargetRequests();
+                if (targetRequests != null && !targetRequests.isEmpty()) {
+                    targetRequests.forEach(this::addRequest);
                 }
             }
         });
