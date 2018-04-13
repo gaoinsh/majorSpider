@@ -16,9 +16,8 @@ package com.demo.leetCode.pratice;
  */
 public class RemoveDuplicatedFromSortedArray {
 
-    [s]
 
     public static int removeDuplicates(int[] nums) {
-
+        return -1;
     }
 }
